@@ -5,7 +5,26 @@ import copy
 
 
 class NeuralNetwork:
-    def __init__(self, inputNeuronC, outputNeuronC, hiddenNeuronPerLayerC, hiddenLayerC):
+    def __init__(self, inputNeuronC=1, outputNeuronC=1, hiddenNeuronPerLayerC=0, hiddenLayerC=0):
+
+        # BU ALAN DENEYSELDİR DEĞİŞEBİLİR
+
+        # hiç parametre verilmemiş ise hiç birşey yapmiyacak
+        # amacı ise json verisinden yüklenmek istenirse boşuna başlangıç
+        # verileri oluşturulmasın
+        if inputNeuronC + outputNeuronC + hiddenNeuronPerLayerC + hiddenLayerC == 2:
+            self.inputsForTrain = []
+            self.outputsForTrain = []
+            return
+
+        # parametre oygunluğu kontrol edilir
+        if inputNeuronC < 1 or outputNeuronC < 1 or hiddenNeuronPerLayerC < 0 or hiddenLayerC < 0:
+            raise Exception('çıktı ve girdi nöronları 1, diğeri 0 dan küçük olamaz')
+
+        # BU ALAN DENEYSELDİR DEĞİŞEBİLİR
+
+        # kontrol sonrası oluşturma işlemleri başlatılır
+
         self.weights = []
         self.biases = []
 
@@ -182,7 +201,4 @@ class NeuralNetwork:
                 for i in range(len(row)):
                     # ağırlıklara eriştik
                     if rnd.random() < mutationRate:
-                        treshold = rnd.random()
-                        row[i] += rnd.uniform(-treshold, treshold)
-                        if not -1 < row[i] < 1:
-                            row[i] = rnd.uniform(-1, 1)
+                        row[i] = rnd.uniform(-1, 1)
